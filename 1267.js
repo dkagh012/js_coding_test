@@ -1,7 +1,7 @@
 let fs = require("fs");
 var input = require('fs').readFileSync('example.txt').toString().split('\n');
 // let input = fs.readFileSync("/dev/stdin").toString().split("\n");
-let time = input[1].split(' ').map();
+let time = input[1].split(' ').map(Number);
 let m = 0;
 let y = 0;
 
