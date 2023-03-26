@@ -6,6 +6,9 @@ let m = 0;
 let y = 0;
 
 for (let i = 0; i < time.length; i++) {
+  console.log(time[i]);
+}
+for (let i = 0; i < time.length; i++) {
   y += time[i] % 30 === 0 ? (time[i] / 30 + 1) * 10 : Math.ceil(time[i] / 30) * 10;
   m += time[i] % 60 === 0 ? (time[i] / 60 + 1) * 15 : Math.ceil(time[i] / 60) * 15;
 }
@@ -16,7 +19,7 @@ else console.log("M " + m);
 
 
 
-//  Y  영식 0~30 은 10원 30 ~ 59 20원
+//  Y  영식 0~30 은 10원 30 ~59 20원
 //  M  민식 0~60 은 15원 60초에서 119는 30원
 
 
