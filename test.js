@@ -1,35 +1,54 @@
-const input = require('fs').readFileSync('example.txt').toString().split('\n');
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-const [N, M] = input[0].split(' ').map(Number);
+rl.question("Please enter the number of students (n): ", (n) => {
+  const arr = new Array(1001).fill(0).map(() => new Array(6).fill(0));
+  const cnt = new Array(1001).fill(0);
 
-const map = [];
-for (let i = 1; i <= N; i++) {
-  map.push(input[i].split(''));
-}
-
-const row = new Array(N).fill(false);
-const col = new Array(M).fill(false);
-
-
-let c = 0;
-let r = 0;
-
-for (let i = 0; i < N; i++) {
-  for (let j = 0; j < M; j++) {
-    if (map[i][j] === 'X') {
-      col[j] = row[i] = true;
+  // 입력 받기
+  const inputStudentData = (studentIndex) => {
+    if (studentIndex > n) {
+      compareStudents();
+      rl.close();
+      return;
     }
-  }
-}
-console.log(col);
-console.log(row);
 
-for (let i = 0; i < N; i++) {
-  if (!row[i]) r++;
-}
+    rl.question(`Enter data for student ${studentIndex} (5 grades separated by space): `, (input) => {
+      const grades = input.split(" ").map(Number);
+      arr[studentIndex] = [0, ...grades];
+      inputStudentData(studentIndex + 1);
+    });
+  };
 
-for (let i = 0; i < M; i++) {
-  if (!col[i]) c++;
-}
+  // 학생 비교
+  const compareStudents = () => {
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j <= n; j++) {
+        for (let k = 1; k <= 5; k++) {
+          if (arr[i][k] === arr[j][k]) {
+            cnt[i]++;
+            break;
+          }
+        }
+      }
+    }
 
-console.log(Math.max(c, r));
+    let max = 0;
+    let maxStudent = 0;
+    for (let i = 1; i <= n; i++) {
+      if (cnt[i] > max) {
+        max = cnt[i];
+        maxStudent = i;
+      } else if (cnt[i] === max && maxStudent > i) {
+        maxStudent = i;
+      }
+    }
+
+    console.log(maxStudent);
+  };
+
+  inputStudentData(1);
+});
